@@ -12,6 +12,7 @@ def handle_message(request: dict, wb_client: WhatsAppClient, db_client: DBClient
         request = GetUserMessageRequest(**request)
     except Exception as e:
         print("Unexpected Response")
+        print(request)
         return Response(status_code=200)
     messages: list[Message] = request.get_messages()
     if messages is not None:
@@ -57,6 +58,7 @@ def handle_message(request: dict, wb_client: WhatsAppClient, db_client: DBClient
             wb_client.send_message(
                 recipient=message.from_number,
                 message=new_message.output_message,
+                context=message.id
             )
             wb_client.markReaction(
                 recipient=message.from_number,

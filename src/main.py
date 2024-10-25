@@ -7,6 +7,7 @@ from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoin
 from starlette.requests import Request
 from starlette.responses import Response
 
+from src.client.database import DBClient
 from src.client.whatsapp import WhatsAppClient
 from src.router.game import game_router
 from src.router.message import message_router
@@ -86,8 +87,9 @@ async def verify_webhook(request: Request):
 async def get_whatsapp_messages(
     request: dict,
     wb_client: WhatsAppClient = Depends(WhatsAppClient),
+    db_client: DBClient = Depends(getDBClient),
 ):
-    return handle_message(request, wb_client)
+    return handle_message(request, wb_client, db_client)
 
 if __name__ == "__main__":
     import uvicorn

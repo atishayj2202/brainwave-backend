@@ -1,4 +1,4 @@
-CREATE TABLE wa_history
+CREATE TABLE IF NOT EXISTS wa_history
 (
     id               UUID PRIMARY KEY,
     created_at       TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
@@ -9,4 +9,4 @@ CREATE TABLE wa_history
     wa_id VARCHAR NOT NULL
 );
 
-CREATE INDEX user_accounts_number_idx ON user_accounts (firebase_user_id);
+CREATE INDEX wa_history_phone_idx ON wa_history (wa_id);

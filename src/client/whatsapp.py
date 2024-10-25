@@ -23,7 +23,7 @@ class WhatsAppClient:
         return response
 
     @classmethod
-    def send_message(cls, message: str, recipient: str, footer: str = None) -> dict:
+    def send_message(cls, message: str, recipient: str, footer: str | None = None, context: str | None = None) -> dict:
         if message.endswith('\n'):
             message = message[:-1]
         if footer is not None:
@@ -34,6 +34,10 @@ class WhatsAppClient:
             "type": "text",
             "text": {"body": message},
         }
+        if context is not None:
+            data["context"] = {
+                "message_id": context,
+            }
         return cls.__send(
             data,
             message,
