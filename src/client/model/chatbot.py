@@ -1,30 +1,33 @@
-from openai import OpenAI
+import requests
+from src.client.model.config import external_user_id, api_key
 
-from src.client.model.config import OPENAI_API_KEY, SYSTEM_PROMPT_2
+api_key = api_key
+external_user_id = external_user_id
 
-model = OpenAI(api_key=OPENAI_API_KEY)
+create_session_url = "https://api.on-demand.io/chat/v1/sessions"
+create_session_headers = {"apikey": api_key}
+create_session_body = {"pluginIds": [], "externalUserId": external_user_id}
+
+response = requests.post(
+    create_session_url, headers=create_session_headers, json=create_session_body
+)
+response_data = response.json()
+session_id = response_data["data"]["id"]
+submit_query_url = f"https://api.on-demand.io/chat/v1/sessions/{session_id}/query"
+submit_query_headers = {"apikey": api_key}
 
 
-def chatbot(messages: list, model_name: str="gpt-4"):
-    system_prompt = {
-                    "role": "system",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": SYSTEM_PROMPT_2
-                        }
-                    ],
-                }
-    if messages[0] != system_prompt:
-        messages.insert(0, system_prompt)
-    chat = model.chat.completions.create(
-        model=model_name,
-        temperature=1,
-        max_tokens=2048,
-        top_p=1,
-        messages=messages,
-        frequency_penalty=0,
-        presence_penalty=0,
-        response_format={"type": "text"},
+def chat(query: str) -> str:
+    submit_query_body = {
+        "endpointId": "predefined-openai-gpt4o",
+        "query": query,
+        "pluginIds": ["plugin-1726226353"],
+        "responseMode": "sync",
+    }
+
+    query_response = requests.post(
+        submit_query_url, headers=submit_query_headers, json=submit_query_body
     )
-    return chat
+    query_response_data = query_response.json()
+
+    return query_response_data["data"]["answer"]
