@@ -1,5 +1,5 @@
 import requests
-from src.client.model.config import external_user_id, api_key
+from src.client.legal_help.config import external_user_id, api_key
 
 create_session_url = "https://api.on-demand.io/chat/v1/sessions"
 create_session_headers = {"apikey": api_key}
@@ -18,7 +18,7 @@ def chat(query: str) -> str:
     submit_query_body = {
         "endpointId": "predefined-openai-gpt4o",
         "query": query,
-        "pluginIds": ["plugin-1726226353", "plugin-1729856480"],
+        "pluginIds": ["plugin-1726226353"],
         "responseMode": "sync",
     }
 
