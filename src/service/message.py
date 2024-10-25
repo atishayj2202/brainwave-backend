@@ -76,12 +76,14 @@ class MessageService:
             #sources = temp["sources"]
             #ans = temp["answer"]
             sources = None
-            ans = model.chatbot(request.question, messages)
+            ans = model.chatbot(request.question, messages)[-1]
+            ans = ans[11:]
         else:
             ans = model.chatbot(
                 request.question,
                 messages,
-            )
+            )[-1]
+            ans = ans[11:]
             sources = None
         answer = Message(
             message=ans,

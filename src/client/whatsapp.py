@@ -23,7 +23,7 @@ class WhatsAppClient:
         return response
 
     @classmethod
-    def send_message(cls, message: str, recipient: str, footer: str = "") -> dict:
+    def send_message(cls, message: str, recipient: str, footer: str = None) -> dict:
         if message.endswith('\n'):
             message = message[:-1]
         if footer is not None:
@@ -41,7 +41,7 @@ class WhatsAppClient:
 
     @classmethod
     def send_message_with_heading(
-        cls, message: str, recipient: str, heading: str, footer: str = ""
+        cls, message: str, recipient: str, heading: str, footer: str = None
     ) -> dict:
         if message.endswith('\n'):
             message = message[:-1]
@@ -66,7 +66,7 @@ class WhatsAppClient:
 
     @classmethod
     def send_message_with_quick_reply(
-        cls, message: str, recipient: str, quick_reply: list[str], heading: str, footer: str = ""
+        cls, message: str, recipient: str, quick_reply: list[str], heading: str, footer: str = None
     ) -> dict:
         if message.endswith('\n'):
             message = message[:-1]
@@ -105,7 +105,7 @@ class WhatsAppClient:
 
     @classmethod
     def send_message_with_reply_list(
-        cls, message: str, recipient: str, quick_reply: dict[str, str], heading: str, footer: str = ""
+        cls, message: str, recipient: str, quick_reply: dict[str, str], heading: str, footer: str = None
     ) -> dict:
         if message.endswith('\n'):
             message = message[:-1]
@@ -144,7 +144,7 @@ class WhatsAppClient:
         )
 
     @classmethod
-    def send_pdf(cls, pdf_url: str, recipient: str, text: str, file_name: str, footer: str = "") -> dict:
+    def send_pdf(cls, pdf_url: str, recipient: str, text: str, file_name: str, footer: str = None) -> dict:
         if text.endswith('\n'):
             text = text[:-1]
         if footer is not None:
@@ -190,7 +190,7 @@ class WhatsAppClient:
         flow_token: str,
         button_text: str,
         start_screen_id: str,
-        footer: str = "",
+        footer: str = None,
     ) -> dict:
         if body.endswith('\n'):
             body = body[:-1]
@@ -238,7 +238,7 @@ class WhatsAppClient:
 if __name__ == "__main__":
     WhatsAppClient.send_message_with_quick_reply(
             message="Please select an option:",
-            recipient="918700529170",
+            recipient="917701958417",
             quick_reply=[
                 "Attendance Summary",
                 "Subject-wise Attendance",

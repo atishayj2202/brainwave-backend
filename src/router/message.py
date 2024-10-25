@@ -37,7 +37,7 @@ async def get_ai_reply(
         request=request,
         user=verified_user.requesting_user,
         db_client=db_client,
-        rag=False,
+        rag=True,
     )
 
 
