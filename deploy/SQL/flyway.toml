@@ -23,6 +23,6 @@ filterFile = "filter.rgf"
 ignoreNewlinesInTextObjects = "off"
 
 [environments.target2]
-url = "jdbc:postgresql://database-server-atishay.postgres.database.azure.com:5432/sih-main-hackathon"
+url = "jdbc:postgresql://database-server-atishay.postgres.database.azure.com:5432/brainwave-hackathon"
 schemas = [ "public" ]
 displayName = "azure-sql"
