@@ -15,7 +15,7 @@ from src.router.user import user_router
 from src.service.whatsapp import handle_message
 from src.utils.client import getDBClient, getFirebaseClient
 
-app = FastAPI(title="BrainWave Backend", version="0.2.0-dev4")
+app = FastAPI(title="BrainWave Backend", version="0.2.0-dev5")
 
 origins = os.environ["CORS_ORIGINS"].split(",")
 ENDPOINT_GET_WHATSAPP_MESSAGES = "/whatsapp"
