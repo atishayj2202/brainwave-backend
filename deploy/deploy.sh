@@ -5,7 +5,7 @@ export PROJECT_NAME=hackathon
 
 # docker details
 export IMAGE_NAME=brainwave-hackathon
-export IMAGE_VERSION=0.2.0-dev3
+export IMAGE_VERSION=0.2.0-dev4
 export REGISTRY_URL=atishay.azurecr.io
 export FULL_IMAGE_NAME=${REGISTRY_URL}/${PROJECT_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}
 export FLYWAY_CONTAINER_NAME=flyway/flyway:latest

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "brainwave-hackathon"
-version = "0.2.0-dev3"
+version = "0.2.0-dev4"
 description = ""
 authors = ["ATISHAY JAIN <atishayj.dev@gmail.com>"]
 readme = "README.md"
