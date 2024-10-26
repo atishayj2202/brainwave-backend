@@ -1,4 +1,5 @@
 import requests
+
 from src.client.legal_help_hi.config import external_user_id, api_key
 
 create_session_url = "https://api.on-demand.io/chat/v1/sessions"

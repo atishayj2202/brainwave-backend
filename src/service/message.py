@@ -15,7 +15,7 @@ class MessageService:
 
     @classmethod
     def get_all_messages(
-        cls, user: User, db_client: DBClient, category_id: UUID = None
+            cls, user: User, db_client: DBClient, category_id: UUID = None
     ) -> list[MessageResponse]:
         messages = db_client.query(
             Message.get_by_multiple_field_multiple,
@@ -37,12 +37,12 @@ class MessageService:
 
     @classmethod
     def get_ai_reply(
-        cls,
-        request: MessageRequest,
-        user: User,
-        db_client: DBClient,
-        rag: bool = True,
-        category_id: UUID = None,
+            cls,
+            request: MessageRequest,
+            user: User,
+            db_client: DBClient,
+            rag: bool = True,
+            category_id: UUID = None,
     ) -> MessageResponse:
         question = Message(
             message=request.question,
@@ -76,9 +76,9 @@ class MessageService:
         model = Model()
 
         if rag:
-            #temp = model.chatbot(request.question, messages)
-            #sources = temp["sources"]
-            #ans = temp["answer"]
+            # temp = model.chatbot(request.question, messages)
+            # sources = temp["sources"]
+            # ans = temp["answer"]
             sources = None
             ans = model.chatbot(request.question, messages)[-1]
             ans = ans[11:]
@@ -107,11 +107,11 @@ class MessageService:
 
     @classmethod
     def get_hindi_ai_reply(
-        cls,
-        request: MessageRequest,
-        user: User,
-        db_client: DBClient,
-        category_id: UUID = None,
+            cls,
+            request: MessageRequest,
+            user: User,
+            db_client: DBClient,
+            category_id: UUID = None,
     ) -> MessageResponse:
         question = Message(
             message=request.question,
@@ -165,9 +165,9 @@ class MessageService:
 
     @classmethod
     def get_sound(
-        cls,
-        message_id: UUID,
-        db_client: DBClient,
+            cls,
+            message_id: UUID,
+            db_client: DBClient,
     ) -> SoundResponse:
         message: Message | None = db_client.query(
             Message.get_id,
@@ -183,4 +183,3 @@ class MessageService:
             message_id=message.id,
             message=text,
         )
-

@@ -1,6 +1,7 @@
 from src.client.model.chatbot import chat
 from src.client.model.config import system_prompt
 
+
 class Model:
     def __init__(self) -> None:
         self.system_prompt = system_prompt

@@ -39,7 +39,7 @@ class UserService:
 
     @classmethod
     def get_category(
-        cls, db_client: DBClient, category_id: UUID | None = None
+            cls, db_client: DBClient, category_id: UUID | None = None
     ) -> CategoryInfoResponse:
         category = db_client.query(
             Category.get_id,

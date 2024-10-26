@@ -22,32 +22,32 @@ CHECK_ANSWER = "/{game_id}/check-answer/"
 
 @game_router.get(GET_GAME)
 async def get_game(
-    verified_game: VerifiedGame = Depends(verify_game),
-    db_client: DBClient = Depends(getDBClient),
+        verified_game: VerifiedGame = Depends(verify_game),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.getGame(verified_game.requesting_game, db_client)
 
 
 @game_router.post(START_GAME)
 async def start_game(
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.createGame(verified_user.requesting_user, db_client)
 
 
 @game_router.get(GET_GAMES)
 async def get_games(
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.getGames(verified_user.requesting_user, db_client)
 
 
 @game_router.delete(CLOSE_GAME)
 async def close_game(
-    verified_game: VerifiedGame = Depends(verify_game),
-    db_client: DBClient = Depends(getDBClient),
+        verified_game: VerifiedGame = Depends(verify_game),
+        db_client: DBClient = Depends(getDBClient),
 ):
     GameService.closeGame(verified_game.requesting_game, db_client)
     return Response(status_code=status.HTTP_200_OK)
@@ -55,25 +55,25 @@ async def close_game(
 
 @game_router.post(UPDATE_GAME)
 async def update_game(
-    request: UpdateGameRequest,
-    verified_game: VerifiedGame = Depends(verify_game),
-    db_client: DBClient = Depends(getDBClient),
+        request: UpdateGameRequest,
+        verified_game: VerifiedGame = Depends(verify_game),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.updateGame(verified_game.requesting_game, db_client, request)
 
 
 @game_router.get(CURRENT_QUESTION)
 async def current_question(
-    verified_game: VerifiedGame = Depends(verify_game),
-    db_client: DBClient = Depends(getDBClient),
+        verified_game: VerifiedGame = Depends(verify_game),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.getQuestion(verified_game.requesting_game, db_client)
 
 
 @game_router.post(CHECK_ANSWER)
 async def check_answer(
-    request: AnswerRequest,
-    verified_game: VerifiedGame = Depends(verify_game),
-    db_client: DBClient = Depends(getDBClient),
+        request: AnswerRequest,
+        verified_game: VerifiedGame = Depends(verify_game),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return GameService.checkAnswer(verified_game.requesting_game, db_client, request)

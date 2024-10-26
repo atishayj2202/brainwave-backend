@@ -36,7 +36,7 @@ class DBClient:
             session.close()
 
     def queries(
-        self, fn: list[Callable[[Session, ...], Any]], kwargs: list[dict[str, Any]]
+            self, fn: list[Callable[[Session, ...], Any]], kwargs: list[dict[str, Any]]
     ):
         session = self.get_session_maker()()
         try:

@@ -20,6 +20,7 @@ app = FastAPI(title="BrainWave Backend", version="0.2.0-dev4")
 origins = os.environ["CORS_ORIGINS"].split(",")
 ENDPOINT_GET_WHATSAPP_MESSAGES = "/whatsapp"
 
+
 class TimingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
         start_time = time.time()
@@ -66,11 +67,11 @@ async def error_middleware(request: Request, call_next):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )"""
 
-
 app.add_event_handler("startup", startup_event)
 app.include_router(user_router)
 app.include_router(message_router)
 app.include_router(game_router)
+
 
 @app.get(ENDPOINT_GET_WHATSAPP_MESSAGES)
 async def verify_webhook(request: Request):
@@ -85,11 +86,12 @@ async def verify_webhook(request: Request):
 
 @app.post(ENDPOINT_GET_WHATSAPP_MESSAGES)
 async def get_whatsapp_messages(
-    request: dict,
-    wb_client: WhatsAppClient = Depends(WhatsAppClient),
-    db_client: DBClient = Depends(getDBClient),
+        request: dict,
+        wb_client: WhatsAppClient = Depends(WhatsAppClient),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return handle_message(request, wb_client, db_client)
+
 
 if __name__ == "__main__":
     import uvicorn

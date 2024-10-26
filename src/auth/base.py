@@ -7,7 +7,7 @@ from src.db.user import User
 
 
 def _get_requesting_user(
-    authorization, cockroach_client: DBClient, firebase_client: FirebaseClient
+        authorization, cockroach_client: DBClient, firebase_client: FirebaseClient
 ) -> User:
     firebase_user_id = get_user_from_token(firebase_client, authorization)
     user = cockroach_client.query(
@@ -22,7 +22,7 @@ def _get_requesting_user(
 
 
 def get_user_from_token(
-    firebase_client: FirebaseClient, authorization: str = Header(...)
+        firebase_client: FirebaseClient, authorization: str = Header(...)
 ) -> str:
     try:
         scheme, token = authorization.split()

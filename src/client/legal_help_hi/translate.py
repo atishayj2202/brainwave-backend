@@ -1,7 +1,9 @@
 import requests
+
 from src.client.legal_help_hi.config import api_key
 
 url = "https://api.on-demand.io/services/v1/public/service/execute/language_translation"
+
 
 def translate(text: str) -> str:
     payload = {

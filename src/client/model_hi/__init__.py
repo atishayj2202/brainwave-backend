@@ -21,4 +21,3 @@ class Model:
         history.append("assistant: " + response)
         history_hi.append(translate(response))
         return history, history_hi
-

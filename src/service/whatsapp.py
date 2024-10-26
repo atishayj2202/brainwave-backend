@@ -1,12 +1,14 @@
 from starlette.responses import Response
 
 from src.client.database import DBClient
+from src.client.legal_help import Model
 from src.client.whatsapp import WhatsAppClient
 from src.db.wa_history import WAMessage
 from src.schema.whatsapp import GetUserMessageRequest, Message, parse_message
-from src.client.legal_help import Model
 
 message_ids = set()
+
+
 def handle_message(request: dict, wb_client: WhatsAppClient, db_client: DBClient):
     try:
         request = GetUserMessageRequest(**request)

@@ -3,13 +3,13 @@ id = "327008ba-9026-43a2-a12c-a7d8c624db70"
 name = "BrainWave Hackathon"
 
 [flyway]
-locations = [ "filesystem:migrations" ]
+locations = ["filesystem:migrations"]
 mixed = true
 outOfOrder = true
 validateMigrationNaming = true
 
-  [flyway.check]
-  majorTolerance = 0
+[flyway.check]
+majorTolerance = 0
 
 [flywayDesktop]
 developmentEnvironment = "development"
@@ -24,5 +24,5 @@ ignoreNewlinesInTextObjects = "off"
 
 [environments.target2]
 url = "jdbc:postgresql://database-server-atishay.postgres.database.azure.com:5432/brainwave-hackathon"
-schemas = [ "public" ]
+schemas = ["public"]
 displayName = "azure-sql"

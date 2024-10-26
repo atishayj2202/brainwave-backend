@@ -1,5 +1,6 @@
 from src.client.tts_model.model import model
 
+
 class TTS_Model:
     def __init__(self):
         pass

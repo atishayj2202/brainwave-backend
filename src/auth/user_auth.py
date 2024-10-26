@@ -22,9 +22,9 @@ class VerifiedGame(BaseModel):
 
 
 def verify_user(
-    authorization: str = Header(...),
-    cockroach_client: DBClient = Depends(getDBClient),
-    firebase_client: FirebaseClient = Depends(getFirebaseClient),
+        authorization: str = Header(...),
+        cockroach_client: DBClient = Depends(getDBClient),
+        firebase_client: FirebaseClient = Depends(getFirebaseClient),
 ) -> VerifiedUser:
     user: User = _get_requesting_user(authorization, cockroach_client, firebase_client)
     if user is None:
@@ -35,10 +35,10 @@ def verify_user(
 
 
 def verify_game(
-    game_id: UUID,
-    authorization: str = Header(...),
-    cockroach_client: DBClient = Depends(getDBClient),
-    firebase_client: FirebaseClient = Depends(getFirebaseClient),
+        game_id: UUID,
+        authorization: str = Header(...),
+        cockroach_client: DBClient = Depends(getDBClient),
+        firebase_client: FirebaseClient = Depends(getFirebaseClient),
 ) -> VerifiedGame:
     user: User = _get_requesting_user(authorization, cockroach_client, firebase_client)
     if user is None:

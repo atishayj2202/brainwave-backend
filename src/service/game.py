@@ -102,7 +102,7 @@ class GameService:
 
     @classmethod
     def updateGame(
-        cls, game: Game, db_client: DBClient, request: UpdateGameRequest
+            cls, game: Game, db_client: DBClient, request: UpdateGameRequest
     ) -> ActiveGameResponse:
         game.current_position = request.current_position
         game.wait_status = request.wait_status
@@ -131,7 +131,7 @@ class GameService:
 
     @classmethod
     def checkAnswer(
-        cls, game: Game, db_client: DBClient, request: AnswerRequest
+            cls, game: Game, db_client: DBClient, request: AnswerRequest
     ) -> AnswerResponse:
         question = db_client.query(
             Question.get_id,

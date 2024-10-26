@@ -15,6 +15,7 @@ class MessageResponse(BaseModel):
 class MessageRequest(BaseModel):
     question: str
 
+
 class SoundResponse(BaseModel):
     sound_url: str
     message_id: UUID

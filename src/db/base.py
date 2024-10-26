@@ -69,7 +69,7 @@ class Base:
 
     @classmethod
     def from_schema_base(
-        cls, base: Type[DBSchemaBase], override_table_name: Optional[str] = None
+            cls, base: Type[DBSchemaBase], override_table_name: Optional[str] = None
     ) -> type:
         default_fields = base._default_sql_alchemy_fields()
         new_fields = {
@@ -118,7 +118,7 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def _extract_all_data(
-        cls, db: Session, statement, error_not_exist: bool = True
+            cls, db: Session, statement, error_not_exist: bool = True
     ) -> List[DBSchemaBase] | None:
         results = db.execute(statement).scalars().all()
         if results:
@@ -129,13 +129,13 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_all(
-        cls, db: Session, error_not_exist: bool = True
+            cls, db: Session, error_not_exist: bool = True
     ) -> List[DBSchemaBase] | None:
         return cls._extract_all_data(db, select(cls._schema_cls()), error_not_exist)
 
     @classmethod
     def get_id(
-        cls, db: Session, id: UUID, error_not_exist: bool = True
+            cls, db: Session, id: UUID, error_not_exist: bool = True
     ) -> DBSchemaBase | None:
         schema_cls = cls._schema_cls()
         result = db.query(schema_cls).filter(cls._schema_cls().id == id).first()
@@ -155,7 +155,7 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_field_unique(
-        cls, db: Session, field: str, match_value: Any, error_not_exist: bool = False
+            cls, db: Session, field: str, match_value: Any, error_not_exist: bool = False
     ) -> DBSchemaBase | None:
         """generic function to extract a single record which matches given column and value condition"""
         schema_cls = cls._schema_cls()
@@ -175,11 +175,11 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_multiple_field_unique(
-        cls,
-        db: Session,
-        fields: list[str],
-        match_values: list[Any],
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            fields: list[str],
+            match_values: list[Any],
+            error_not_exist: bool = False,
     ) -> DBSchemaBase | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -201,11 +201,11 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_multiple_field_multiple(
-        cls,
-        db: Session,
-        fields: list[str],
-        match_values: list[Any],
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            fields: list[str],
+            match_values: list[Any],
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -227,13 +227,13 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_multiple_field_counted(
-        cls,
-        db: Session,
-        fields: list[str],
-        match_values: list[Any],
-        count: int,
-        start_time: datetime,
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            fields: list[str],
+            match_values: list[Any],
+            count: int,
+            start_time: datetime,
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -261,7 +261,7 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_field_multiple(
-        cls, db: Session, field: str, match_value: Any, error_not_exist: bool = False
+            cls, db: Session, field: str, match_value: Any, error_not_exist: bool = False
     ) -> list[DBSchemaBase] | None:
         """generic function to extract a single record which matches given column and value condition"""
         schema_cls = cls._schema_cls()
@@ -281,14 +281,14 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_time_field_multiple(
-        cls,
-        db: Session,
-        time_field: str,
-        start_time: datetime,
-        end_time: datetime,
-        field: str,
-        match_value: Any,
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            time_field: str,
+            start_time: datetime,
+            end_time: datetime,
+            field: str,
+            match_value: Any,
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -311,13 +311,13 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_value_in_list_uncounted(
-        cls,
-        db: Session,
-        field: str,
-        field_2: str,
-        match_value_2: Any,
-        match_values: list[Any],
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            field: str,
+            field_2: str,
+            match_value_2: Any,
+            match_values: list[Any],
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -340,13 +340,13 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_value_in_list_counted(
-        cls,
-        db: Session,
-        start_time: datetime,
-        field: str,
-        match_values: list[Any],
-        count: int,
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            start_time: datetime,
+            field: str,
+            match_values: list[Any],
+            count: int,
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         schema_cls = cls._schema_cls()
         result = (
@@ -371,11 +371,11 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_by_field_value_list(
-        cls,
-        db: Session,
-        field: str,
-        match_values: list[Any],
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            field: str,
+            match_values: list[Any],
+            error_not_exist: bool = False,
     ) -> list[DBSchemaBase] | None:
         """generic function to extract a single record which matches given column and value condition"""
         schema_cls = cls._schema_cls()
@@ -412,9 +412,9 @@ class DBSchemaBase(BaseModel, ABC):
 
     @classmethod
     def get_latest_record(
-        cls,
-        db: Session,
-        error_not_exist: bool = False,
+            cls,
+            db: Session,
+            error_not_exist: bool = False,
     ) -> DBSchemaBase | None:
         """generic function to extract a single record which matches given column and value condition"""
         schema_cls = cls._schema_cls()
