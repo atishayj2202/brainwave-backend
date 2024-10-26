@@ -5,6 +5,7 @@ from starlette.exceptions import HTTPException
 from src.client.database import DBClient
 from src.client.model import Model
 from src.client.model_hi import Model as HModel
+from src.client.tts_model import TTS_Model as TTS
 from src.db.message import Message
 from src.db.user import User
 from src.schema.message import MessageRequest, MessageResponse, SoundResponse
@@ -176,8 +177,9 @@ class MessageService:
         if message is None:
             raise HTTPException(status_code=404, detail="Message not found")
         text = message.message if message.hindi_message is None else message.hindi_message
+        model = TTS()
         return SoundResponse(
-            sound_url="atishayj.me",
+            sound_url=model.tts(text),
             message_id=message.id,
             message=text,
         )
