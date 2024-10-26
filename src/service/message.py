@@ -1,11 +1,13 @@
 from uuid import UUID
 
+from starlette.exceptions import HTTPException
+
 from src.client.database import DBClient
 from src.client.model import Model
 from src.client.model_hi import Model as HModel
 from src.db.message import Message
 from src.db.user import User
-from src.schema.message import MessageRequest, MessageResponse
+from src.schema.message import MessageRequest, MessageResponse, SoundResponse
 
 
 class MessageService:
@@ -159,3 +161,24 @@ class MessageService:
             created_at=answer.created_at,
             sources=[ans],
         )
+
+    @classmethod
+    def get_sound(
+        cls,
+        message_id: UUID,
+        db_client: DBClient,
+    ) -> SoundResponse:
+        message: Message | None = db_client.query(
+            Message.get_id,
+            id=message_id,
+            error_not_exist=False
+        )
+        if message is None:
+            raise HTTPException(status_code=404, detail="Message not found")
+        text = message.message if message.hindi_message is None else message.hindi_message
+        return SoundResponse(
+            sound_url="atishayj.me",
+            message_id=message.id,
+            message=text,
+        )
+

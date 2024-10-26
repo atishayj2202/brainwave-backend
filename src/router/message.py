@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from src.auth.user_auth import VerifiedUser, verify_user
 from src.client.database import DBClient
-from src.schema.message import MessageRequest, MessageResponse
+from src.schema.message import MessageRequest, MessageResponse, SoundResponse
 from src.service.message import MessageService
 from src.utils.client import getDBClient
 
@@ -17,12 +17,13 @@ GET_HINDI_AI_REPLY = "/get-hindi-ai-reply/"
 GET_CATEGORY_MESSAGES = "/{category_id}/get-messages/"
 GET_CATEGORY_AI_REPLY = "/{category_id}/get-ai-reply/"
 GET_CATEGORY_HINDI_AI_REPLY = "/{category_id}/get-hindi-ai-reply/"
+GET_SOUND = "/{message_id}/get-sound/"
 
 
 @message_router.get(GET_MESSAGES, response_model=list[MessageResponse])
 async def get_messages(
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_all_messages(
         user=verified_user.requesting_user, db_client=db_client
@@ -31,9 +32,9 @@ async def get_messages(
 
 @message_router.post(GET_AI_REPLY, response_model=MessageResponse)
 async def get_ai_reply(
-    request: MessageRequest,
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        request: MessageRequest,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_ai_reply(
         request=request,
@@ -45,9 +46,9 @@ async def get_ai_reply(
 
 @message_router.post(GET_HINDI_AI_REPLY, response_model=MessageResponse)
 async def get_ai_reply(
-    request: MessageRequest,
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        request: MessageRequest,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_hindi_ai_reply(
         request=request,
@@ -58,9 +59,9 @@ async def get_ai_reply(
 
 @message_router.get(GET_CATEGORY_MESSAGES, response_model=list[MessageResponse])
 async def get_messages(
-    category_id: UUID,
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        category_id: UUID,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_all_messages(
         user=verified_user.requesting_user, db_client=db_client, category_id=category_id
@@ -69,10 +70,10 @@ async def get_messages(
 
 @message_router.post(GET_CATEGORY_AI_REPLY, response_model=MessageResponse)
 async def get_ai_reply(
-    category_id: UUID,
-    request: MessageRequest,
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        category_id: UUID,
+        request: MessageRequest,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_ai_reply(
         request=request,
@@ -85,14 +86,26 @@ async def get_ai_reply(
 
 @message_router.post(GET_CATEGORY_HINDI_AI_REPLY, response_model=MessageResponse)
 async def get_ai_reply(
-    category_id: UUID,
-    request: MessageRequest,
-    verified_user: VerifiedUser = Depends(verify_user),
-    db_client: DBClient = Depends(getDBClient),
+        category_id: UUID,
+        request: MessageRequest,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
 ):
     return MessageService.get_hindi_ai_reply(
         request=request,
         user=verified_user.requesting_user,
         db_client=db_client,
         category_id=category_id,
+    )
+
+
+@message_router.get(GET_SOUND, response_model=SoundResponse)
+async def get_sound(
+        message_id: UUID,
+        verified_user: VerifiedUser = Depends(verify_user),
+        db_client: DBClient = Depends(getDBClient),
+):
+    return MessageService.get_sound(
+        message_id=message_id,
+        db_client=db_client,
     )
