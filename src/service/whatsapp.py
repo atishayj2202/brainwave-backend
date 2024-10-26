@@ -53,7 +53,7 @@ def handle_message(request: dict, wb_client: WhatsAppClient, db_client: DBClient
                 message_id=message.id,
                 message=question,
                 output_message=model.chatbot(question, message_history)[-1][11:],
-                wa_id= message.from_number
+                wa_id=message.from_number
             )
             wb_client.send_message(
                 recipient=message.from_number,

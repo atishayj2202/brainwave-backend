@@ -10,6 +10,7 @@ class Message(DBSchemaBase):
     user_id: UUID
     role: str
     status: str
+    hindi_message: str | None = None
     category_id: UUID | None = None
     is_deleted: datetime | None = None
 

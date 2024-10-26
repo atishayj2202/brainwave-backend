@@ -2,6 +2,7 @@ from uuid import UUID
 
 from src.client.database import DBClient
 from src.client.model import Model
+from src.client.model_hi import Model as HModel
 from src.db.message import Message
 from src.db.user import User
 from src.schema.message import MessageRequest, MessageResponse
@@ -23,7 +24,7 @@ class MessageService:
             return []
         return [
             MessageResponse(
-                message=message.message,
+                message=message.message if message.hindi_message is None else message.hindi_message,
                 role=message.role,
                 message_id=message.id,
                 created_at=message.created_at,
@@ -99,4 +100,62 @@ class MessageService:
             message_id=answer.id,
             created_at=answer.created_at,
             sources=sources,
+        )
+
+    @classmethod
+    def get_hindi_ai_reply(
+        cls,
+        request: MessageRequest,
+        user: User,
+        db_client: DBClient,
+        category_id: UUID = None,
+    ) -> MessageResponse:
+        question = Message(
+            message=request.question,
+            user_id=user.id,
+            role="User",
+            status="Pending",
+            category_id=category_id,
+        )
+        question.status = "Done"
+        temp = db_client.query(
+            Message.get_by_multiple_field_multiple,
+            fields=["user_id", "category_id"],
+            match_values=[user.id, category_id],
+            error_not_exist=False,
+        )
+        messages = []
+        hindi_messages = []
+        if temp is not None:
+            for message in temp:
+                messages.append(
+                    message.message
+                )
+                if message.hindi_message is not None:
+                    hindi_messages.append(
+                        message.hindi_message
+                    )
+                else:
+                    hindi_messages.append(
+                        ""
+                    )
+        model = HModel()
+        ans, ans_h = model.chatbot(request.question, messages, hindi_messages)
+        ans = ans[-1]
+        ans_h = ans_h[-1]
+        answer = Message(
+            message=ans,
+            user_id=user.id,
+            role="AI",
+            status="Done",
+            category_id=category_id,
+            hindi_message=ans_h,
+        )
+        db_client.query(Message.add, items=[question, answer])
+        return MessageResponse(
+            message=ans_h,
+            role=answer.role,
+            message_id=answer.id,
+            created_at=answer.created_at,
+            sources=[ans],
         )
